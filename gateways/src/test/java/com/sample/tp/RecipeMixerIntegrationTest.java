@@ -16,12 +16,22 @@ public class RecipeMixerIntegrationTest {
     RecipeGateway recipeGateway;
 
     @Test
-    public void simpleMessage() {
-
+    public void simpleMessage()
+    {
         String response = recipeGateway.send("sultanas, flour");
         //Assert.assertEquals(response, RecipeMixer.mixed);
         System.out.println(response);
     }
 
+    @Autowired
+    SecondGateway secondGateway;
 
+    @Test
+    public void secondMessage()
+    {
+        String response2 = secondGateway.send("sultanas, flour");
+        //Assert.assertEquals(response, RecipeMixer.mixed);
+        System.out.println(response2);
+
+    }
 }

@@ -7,19 +7,38 @@
        http://www.springframework.org/schema/integration
        http://www.springframework.org/schema/integration/spring-integration-2.1.xsd">
 
-    <bean name="testClass" class="com.sample.tp.TestClass"/>
+<bean name="testClass" class="com.sample.tp.TestClass" />
+
+<bean name="secondClass" class="com.sample.tp.SecondClass" />
+
+
 
     <int:gateway service-interface="com.sample.tp.RecipeGateway"
                  default-request-channel="request-channel"
                  default-reply-channel="reply-channel"
-                 id="recipeGateway"/>
+                 id="recipeGateway" />
 
-    <int:channel id="request-channel" datatype="java.lang.String"/>
+    <int:gateway service-interface="com.sample.tp.SecondGateway"
+                 default-request-channel="request-second-channel"
+                 default-reply-channel="reply-second-channel"
+                 id="secondGateway" />
+
+   <!-- <int:channel id="request-channel" datatype="java.lang.String" />-->
+
+    <int:channel id="request-second-channel" datatype="java.lang.String" />
+
+
 
     <int:service-activator ref="testClass"
                  input-channel="request-channel"
-                 output-channel="reply-channel"/>
+                 output-channel="reply-channel" />
+
+    <int:service-activator ref="secondClass"
+                 input-channel="request-second-channel"
+                 output-channel="reply-second-channel" />
 
     <int:channel id="reply-channel"/>
+
+    <int:channel id="reply-second-channel" />
 
 </beans>
