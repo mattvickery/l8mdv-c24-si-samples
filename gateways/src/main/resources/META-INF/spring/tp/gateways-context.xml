@@ -3,8 +3,23 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:int="http://www.springframework.org/schema/integration"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/integration
+       http://www.springframework.org/schema/integration/spring-integration-2.1.xsd">
 
-    <import resource="beans.xml"/>
+    <bean name="testClass" class="com.sample.tp.TestClass"/>
+
+    <int:gateway service-interface="com.sample.tp.RecipeGateway"
+                 default-request-channel="request-channel"
+                 default-reply-channel="reply-channel"
+                 id="recipeGateway"/>
+
+    <int:channel id="request-channel" datatype="java.lang.String"/>
+
+    <int:service-activator ref="testClass"
+                 input-channel="request-channel"
+                 output-channel="reply-channel"/>
+
+    <int:channel id="reply-channel"/>
 
 </beans>
